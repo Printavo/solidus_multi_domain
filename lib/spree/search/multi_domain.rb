@@ -1,8 +1,11 @@
 module Spree::Search
   class MultiDomain < Spree::Core::Search::Base
+    class MissingStoreIDError < RuntimeError; end
+
     def get_base_scope
-      base_scope = @cached_product_group ? @cached_product_group.products.available : Spree::Product.available
-      base_scope = base_scope.by_store(@properties[:current_store_id]) if @properties[:current_store_id]
+      raise MissingStoreIDError unless @properties[:current_store_id].present?
+
+      base_scope = Spree::Product.available.by_store(@properties[:current_store_id])
       base_scope = base_scope.in_taxon(@properties[:taxon]) unless @properties[:taxon].blank?
 
       base_scope = get_products_conditions_for(base_scope, @properties[:keywords]) unless @properties[:keywords].blank?
