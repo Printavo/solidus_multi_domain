@@ -7,6 +7,7 @@ module Spree::Search
 
       base_scope = Spree::Product.available.by_store(@properties[:current_store_id])
       base_scope = base_scope.in_taxon(@properties[:taxon]) unless @properties[:taxon].blank?
+      base_scope = base_scope.where(deactivated: @properties[:deactivated]) unless @properties[:deactivated].nil?
 
       base_scope = get_products_conditions_for(base_scope, @properties[:keywords]) unless @properties[:keywords].blank?
 
@@ -17,6 +18,7 @@ module Spree::Search
     def prepare(params)
       super
 
+      @properties[:deactivated] = params[:deactivated]
       @properties[:current_store_id] = params[:current_store_id]
     end
   end
