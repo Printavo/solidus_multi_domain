@@ -2,7 +2,7 @@ module Spree
   module Admin
     module ProductsControllerDecorator
       def self.prepended(base)
-        base.update.before :set_stores
+        base.before_action :set_stores, only: :update
       end
 
       def set_stores
