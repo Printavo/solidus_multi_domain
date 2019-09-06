@@ -6,6 +6,6 @@ module Spree
       @taxonomies = get_taxonomies
     end
 
-    Spree::HomeControllerDecorator.prepend(self) if SpreeMultiDomain::Engine.frontend_available?
+    Spree::HomeController.prepend(self) if SpreeMultiDomain::Engine.frontend_available?
   end
 end
