@@ -5,7 +5,7 @@ module Spree
         base.include(SpreeMultiDomain::ShowProductSupport)
       end
 
-      Spree::Api::ProductsControllerDecorator.prepend(self) if SpreeMultiDomain::Engine.api_available?
+      Spree::Api::ProductsController.prepend(self) if SpreeMultiDomain::Engine.api_available?
     end
   end
 end
