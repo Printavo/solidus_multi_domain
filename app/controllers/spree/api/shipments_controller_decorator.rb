@@ -10,6 +10,6 @@ module Spree
 end
 
 if SpreeMultiDomain::Engine.api_available?
-  Spree::Api::ShipmentsController.prepend(SpreeMultiStore::Api::ShipmentsControllerDecorator)
-  Spree::Api::ShipmentsController.include(SpreeMultiDomain::CreateLineItemSupport)
+  Spree::Api::ShipmentsController.prepend(Spree::Api::ShipmentsControllerDecorator)
+  Spree::Api::ShipmentsController.include(Spree::CreateLineItemSupport)
 end
