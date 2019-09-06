@@ -1,3 +1,11 @@
-if SpreeMultiDomain::Engine.api_available?
-  Spree::Api::LineItemsController.include(SpreeMultiDomain::CreateLineItemSupport)
+module Spree
+  module Api
+    module LineItemsControllerDecorator
+      def self.prepended(base)
+        base.include(SpreeMultiDomain::CreateLineItemSupport)
+      end
+
+      Spree::Api::LineItemsController.prepend(self) if SpreeMultiDomain::Engine.api_available?
+    end
+  end
 end
