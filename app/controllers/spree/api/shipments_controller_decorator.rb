@@ -1,4 +1,4 @@
-module SpreeMultiStore
+module Spree
   module Api
     module ShipmentsControllerDecorator
       def mine
