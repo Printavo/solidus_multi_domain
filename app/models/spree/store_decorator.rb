@@ -1,6 +1,6 @@
 module Spree
   module StoreDecorator
-    def prepend(base)
+    def self.prepended(base)
       base.has_and_belongs_to_many :products, join_table: 'spree_products_stores', dependent: :destroy
       base.has_many :taxonomies
       base.has_many :orders

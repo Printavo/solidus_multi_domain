@@ -1,6 +1,6 @@
 module Spree
   module LineItemDecorator
-    def prepend(base)
+    def self.prepended(base)
       base.include(SpreeMultiDomain::LineItemConcerns)
     end
 

@@ -1,7 +1,6 @@
 module Spree
   module TaxonomyDecorator
-
-    def prepend(base)
+    def self.prepended(base)
       base.belongs_to :store
     end
 

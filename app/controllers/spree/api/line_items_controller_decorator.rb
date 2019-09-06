@@ -1,7 +1,7 @@
 module Spree
   module Api
     module LineItemsControllerDecorator
-      def prepend(base)
+      def self.prepended(base)
         base.include(SpreeMultiDomain::CreateLineItemSupport)
       end
 

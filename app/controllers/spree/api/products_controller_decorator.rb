@@ -1,7 +1,7 @@
 module Spree
   module Api
     module ProductsControllerDecorator
-      def prepend(base)
+      def self.prepended(base)
         base.include(SpreeMultiDomain::ShowProductSupport)
       end
 

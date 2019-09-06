@@ -1,7 +1,7 @@
 module Spree
   module Admin
     module ProductsControllerDecorator
-      def prepend(base)
+      def self.prepended(base)
         base.update.before :set_stores
       end
 

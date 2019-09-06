@@ -1,7 +1,7 @@
 module Spree
   module ShippingMethodDecorator
 
-    def prepend(base)
+    def self.prepended(base)
       base.has_many :store_shipping_methods
       base.has_many :stores, :through => :store_shipping_methods
     end
