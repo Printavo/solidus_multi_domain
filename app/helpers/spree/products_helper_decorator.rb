@@ -5,7 +5,7 @@ module Spree
       @taxonomies = @taxonomies.includes(:root => :children)
       @taxonomies
     end
-
-    Spree::ProductsHelper.prepend(self)
   end
 end
+
+::Spree::ProductsHelper.include(Spree::ProductsHelperDecorator)
