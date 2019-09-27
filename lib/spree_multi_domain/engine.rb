@@ -6,14 +6,7 @@ module SpreeMultiDomain
 
     class << self
       def activate
-        ['app', 'lib'].each do |dir|
-          Dir.glob(File.join(File.dirname(__FILE__), "../../#{dir}/**/*_decorator*.rb")) do |c|
-            Rails.application.config.cache_classes ? require(c) : load(c)
-          end
-        end
-
         Spree::Config.searcher_class = Spree::Search::MultiDomain
-        ApplicationController.send :include, SpreeMultiDomain::MultiDomainHelpers
       end
 
       def admin_available?
