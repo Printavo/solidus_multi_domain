@@ -1,4 +1,4 @@
-module FlexiVariants
+module MultiDomain
   module Spree
     module ProductDecorator
       def self.prepended(base)

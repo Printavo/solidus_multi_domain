@@ -6,8 +6,15 @@ module SpreeMultiDomain
 
     class << self
       def activate
+        Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
+          puts "loading in flexi #{c}"
+          Rails.configuration.cache_classes ? require_dependency(c) : load(c)
+        end
+
         Spree::Config.searcher_class = Spree::Search::MultiDomain
-        ApplicationController.send :include, SpreeMultiDomain::MultiDomainHelpers
+
+        require "solidus_multi_domain/multi_domain_helpers"
+        ApplicationController.send :include, SolidusMultiDomain::MultiDomainHelpers
       end
 
       def admin_available?
@@ -28,17 +35,17 @@ module SpreeMultiDomain
     initializer "current order decoration" do |app|
       require 'spree/core/controller_helpers/order'
       ::Spree::Core::ControllerHelpers::Order.prepend(Module.new do
-        def current_order_with_multi_domain(options = {})
-          options[:create_order_if_necessary] ||= false
-          current_order_without_multi_domain(options)
+          def current_order_with_multi_domain(options = {})
+            options[:create_order_if_necessary] ||= false
+            current_order_without_multi_domain(options)
 
-          if @current_order and current_store and @current_order.store.blank?
-            @current_order.update_attribute(:store_id, current_store.id)
+            if @current_order and current_store and @current_order.store.blank?
+              @current_order.update_attribute(:store_id, current_store.id)
+            end
+
+            @current_order
           end
-
-          @current_order
-        end
-      end)
+        end)
     end
 
     initializer 'spree.promo.register.promotions.rules' do |app|
