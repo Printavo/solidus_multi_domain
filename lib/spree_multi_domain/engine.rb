@@ -7,7 +7,6 @@ module SpreeMultiDomain
     class << self
       def activate
         Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
-          puts "loading in flexi #{c}"
           Rails.configuration.cache_classes ? require_dependency(c) : load(c)
         end
 
