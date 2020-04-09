@@ -12,7 +12,7 @@ module Spree::Search
       base_scope = get_products_conditions_for(base_scope, @properties[:keywords]) if @properties[:keywords].present?
 
       base_scope = add_search_scopes(base_scope)
-      base_scope = base_scope.order(position: :asc)
+      base_scope = base_scope.order(position: :asc, created_at: :desc)
 
       base_scope
     end
