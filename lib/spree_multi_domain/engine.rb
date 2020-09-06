@@ -7,7 +7,7 @@ module SpreeMultiDomain
     class << self
       def activate
         Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
-          Rails.configuration.cache_classes ? require_dependency(c) : load(c)
+          require_dependency(c)
         end
 
         Spree::Config.searcher_class = Spree::Search::MultiDomain
