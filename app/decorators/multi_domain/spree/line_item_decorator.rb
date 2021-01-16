@@ -1,11 +1,9 @@
-module MultiDomain
-  module Spree
-    module LineItemDecorator
-      def self.prepended(base)
-        base.include(SpreeMultiDomain::LineItemConcerns)
-      end
-
-      ::Spree::LineItem.prepend(self)
+module Spree
+  module LineItemDecorator
+    def self.prepended(base)
+      base.include(SpreeMultiDomain::LineItemConcerns)
     end
+
+    ::Spree::LineItem.prepend(self)
   end
 end
