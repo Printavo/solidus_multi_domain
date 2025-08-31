@@ -22,8 +22,8 @@ module SpreeMultiDomain
     end
 
     config.to_prepare do
-      require "helpers/solidus_multi_domain/multi_domain_helpers"
-      ApplicationController.send :include, SolidusMultiDomain::MultiDomainHelpers
+      require "spree_multi_domain/multi_domain_helpers"
+      ApplicationController.send :include, SpreeMultiDomain::MultiDomainHelpers
     end
 
     initializer "current order decoration" do |app|

@@ -1,4 +1,4 @@
-module SolidusMultiDomain
+module SpreeMultiDomain
   module MultiDomainHelpers
     extend ActiveSupport::Concern
 
