@@ -22,7 +22,7 @@ module SpreeMultiDomain
     end
 
     config.to_prepare do
-      require "solidus_multi_domain/multi_domain_helpers"
+      require "helpers/solidus_multi_domain/multi_domain_helpers"
       ApplicationController.send :include, SolidusMultiDomain::MultiDomainHelpers
     end
 
