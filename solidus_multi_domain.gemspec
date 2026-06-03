@@ -21,15 +21,25 @@ Gem::Specification.new do |s|
   s.add_dependency "solidus", ['>= 1.1', '< 3']
   s.add_dependency "solidus_support"
 
-  s.add_development_dependency "rspec-rails",  "~> 3.2"
+  # rspec-rails 7.1 is the last line that keeps fixture_path= (removed in 8.x).
+  s.add_development_dependency "rspec-rails",  "~> 7.1"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "sass-rails"
-  s.add_development_dependency "coffee-rails"
+  # sprockets 4 is required for the asset manifest pipeline under Rails 7.2/8.0.
+  s.add_development_dependency "sprockets", "~> 4"
   s.add_development_dependency "factory_bot", "~> 4.5"
-  s.add_development_dependency "capybara", "~> 2.18"
-  s.add_development_dependency "poltergeist"
+  s.add_development_dependency "capybara"
+  # poltergeist (PhantomJS) is dead; drive js: true specs with headless Chrome.
+  s.add_development_dependency "selenium-webdriver"
+  # puma is needed as the Capybara app server for the Selenium driver.
+  s.add_development_dependency "puma"
   s.add_development_dependency "capybara-screenshot"
-  s.add_development_dependency "database_cleaner"
+  s.add_development_dependency "database_cleaner", "~> 2.0"
   s.add_development_dependency "ffaker"
+  # Stdlib gems extracted from Ruby 3.4 default gems; required transitively
+  # (observer by factory_bot 4.x; mutex_m/benchmark by activesupport).
+  s.add_development_dependency "observer"
+  s.add_development_dependency "mutex_m"
+  s.add_development_dependency "benchmark"
 end

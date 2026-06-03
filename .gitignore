@@ -32,3 +32,5 @@ Gemfile.lock
 .ruby-version
 .ruby-gemset
 pkg
+
+/vendor/bundle
