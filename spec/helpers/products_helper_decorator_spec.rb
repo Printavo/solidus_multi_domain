@@ -5,7 +5,9 @@ module Spree
     before(:each) do
       @store     = FactoryBot.create(:store)
       @taxonomy  = FactoryBot.create(:taxonomy, :store => @store)
-      @taxonomy2 = FactoryBot.create(:taxonomy)
+      # taxonomy belongs_to :store is required by default since Rails 5; give the
+      # second taxonomy its own store. (mirrors solidusio-contrib/solidus_multi_domain#122)
+      @taxonomy2 = FactoryBot.create(:taxonomy, :store => FactoryBot.create(:store))
 
       allow(helper).to receive(:current_store) { @store }
     end

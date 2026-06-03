@@ -6,7 +6,9 @@ describe Spree::Admin::ProductsController do
   describe "on :index" do
     it "renders index" do
       get :index
-      expect(response).to be_success
+      # be_success was removed in Rails 5+; use be_successful.
+      # (mirrors solidusio-contrib/solidus_multi_domain#98)
+      expect(response).to be_successful
     end
   end
 

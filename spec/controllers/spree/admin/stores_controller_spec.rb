@@ -8,7 +8,9 @@ describe Spree::Admin::StoresController do
 
     it 'renders' do
       get :index
-      expect(response).to be_success
+      # be_success was removed in Rails 5+; use be_successful.
+      # (mirrors solidusio-contrib/solidus_multi_domain#98)
+      expect(response).to be_successful
     end
   end
 
@@ -19,7 +21,7 @@ describe Spree::Admin::StoresController do
 
     it 'renders' do
       get :edit, params: { id: store.to_param }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end
