@@ -42,21 +42,12 @@ task :test_app do
 
   puts "Setting up dummy database..."
   # rake test_app's chained db:create/db:migrate can leave the sqlite file empty;
-  # split into discrete bin/rails invocations and load the schema explicitly.
+  # split into discrete bin/rails invocations. The engine auto-appends its own
+  # db/migrate to the app migrator, so a single db:migrate applies the extension's
+  # migrations directly. (We intentionally skip the install generator's copy step:
+  # copying with fresh timestamps while the engine path stays active leaves the
+  # original-timestamp migrations forever "pending" against maintain_test_schema!.)
   sh "bin/rails db:environment:set RAILS_ENV=test"
   sh "bin/rails db:drop db:create RAILS_ENV=test"
-  sh "bin/rails db:migrate VERBOSE=false RAILS_ENV=test"
-
-  begin
-    require "generators/solidus_multi_domain/install/install_generator"
-    puts 'Running extension installation generator...'
-    SolidusMultiDomain::Generators::InstallGenerator.start(["--auto-run-migrations"])
-  rescue LoadError
-    # No extension generator to run
-  end
-
-  # The extension generator copies its migrations then runs `rake db:migrate`
-  # without RAILS_ENV, so they land in development, not the test DB. Re-run
-  # against the test environment so maintain_test_schema! finds no pending work.
   sh "bin/rails db:migrate VERBOSE=false RAILS_ENV=test"
 end
