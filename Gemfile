@@ -1,17 +1,13 @@
 source "https://rubygems.org"
 
-branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
-gem "solidus", github: "solidusio/solidus", branch: branch
+# Consume the Printavo Solidus fork: Solidus 2.11.16 + Rails 8 compat + state_machines pin.
+# This branch boots on BOTH the Rails 7.2 and 8.0 axes.
+gem "solidus", git: "https://github.com/Printavo/solidus.git", branch: "rails-8.0-support"
 
-if branch == 'master' || branch >= "v2.0"
-  gem "rails-controller-testing", group: :test
-else
-  gem "rails", '~> 4.2.0'
-  gem "rails_test_params_backport", group: :test
-end
+# Rails version is selected per-axis via RAILS_VERSION so one tree verifies both 7.2 and 8.0.
+gem "rails", ENV.fetch("RAILS_VERSION", "~> 8.0"), require: false
 
-gem 'pg', '~> 0.21'
-gem 'mysql2', '~> 0.4.10'
+gem "rails-controller-testing", group: :test
 
 group :development, :test do
   gem "pry-rails"

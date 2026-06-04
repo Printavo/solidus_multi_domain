@@ -8,7 +8,10 @@ describe Spree::ProductsController do
     let!(:store) { FactoryBot.create(:store) }
 
     it 'returns 404' do
-      if SolidusSupport.solidus_gem_version < Gem::Version.new('2.5.x')
+      # SolidusSupport.solidus_gem_version is deprecated and its deprecator.warn(..., caller)
+      # raises NoMethodError under ActiveSupport 8's deprecation reporting; use the
+      # non-deprecated Spree.solidus_gem_version. (mirrors solidusio-contrib/solidus_multi_domain#164)
+      if Spree.solidus_gem_version < Gem::Version.new('2.5.x')
         get :show, params: { id: product.to_param }
         expect(response.response_code).to eq 404
       else
@@ -31,7 +34,9 @@ describe Spree::ProductsController do
     it 'returns 404' do
       allow(controller).to receive_messages(:current_store => store_2)
 
-      if SolidusSupport.solidus_gem_version < Gem::Version.new('2.5.x')
+      # See note above: use Spree.solidus_gem_version, not the deprecated
+      # SolidusSupport.solidus_gem_version. (mirrors solidusio-contrib/solidus_multi_domain#164)
+      if Spree.solidus_gem_version < Gem::Version.new('2.5.x')
         get :show, params: { id: product.to_param }
         expect(response.response_code).to eq 404
       else
